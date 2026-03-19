@@ -1,0 +1,31 @@
+name: 'Generate repomd Context'
+description: 'Automatically generate a repo.md file containing compressed codebase context'
+branding:
+  icon: 'file-text'
+  color: 'blue'
+
+inputs:
+  preset:
+    description: 'Compression preset (light, medium, aggressive, ultra)'
+    required: false
+    default: 'medium'
+  max_tokens:
+    description: 'Target token budget'
+    required: false
+    default: '50000'
+  output:
+    description: 'Output file name'
+    required: false
+    default: 'repo.md'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download repomd CLI
+      shell: bash
+      run: |
+        curl -fsSL https://repomd.dev/install | sh
+    - name: Generate Context
+      shell: bash
+      run: |
+        repomd --preset ${{ inputs.preset }} --tokens ${{ inputs.max_tokens }} --output ${{ inputs.output }}
