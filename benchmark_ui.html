@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>repomd: Benchmark Process</title>
+<style>
+  body { background-color: #0d0d0f; color: #00ff41; font-family: "Fira Code", monospace; margin: 0; padding: 20px; overflow: hidden; }
+  h1 { color: #f0f0f0; margin-bottom: 5px; }
+  p, pre { margin: 0; padding: 0; line-height: 1.4; font-size: 14px; }
+  #terminal { max-height: 90vh; overflow-y: hidden; }
+</style>
+</head>
+<body>
+  <h1>[REPOMD] AST Extraction Benchmark Suite</h1>
+  <p style="color: #6c6c75; margin-bottom: 20px;">v0.1.0-alpha | target: x86_64-pc-windows-msvc</p>
+  <div id="terminal"></div>
+  <script>
+    const lines = [
+      "Initializing benchmark suite...",
+      "Loading TikToken cl100k_base encoder... [OK]",
+      "Targeting 3 repositories: Flask API, Next+FastAPI, Monorepo",
+      "--------------------------------------------------",
+      "> RUN 1: Flask API (45 files)",
+      "[ingest] Discovered 45 files (12 ignored based on .gitignore)",
+      "[discover] Classifying roles... 38 source, 5 config, 2 doc",
+      "[discover] Calculating Context Priority Scores (CPS)...",
+      "[compress] Preset: Ultra | Tokens limit: 50,000",
+      "[assemble] Appending file: src/app.py (CPS 1.7) -> Verbatim",
+      "[assemble] Appending file: src/models.py (CPS 1.2) -> Structural Compress (AST)",
+      "✓ Compressed: 28,400 -> 6,200 tokens (4.6:1)",
+      "✓ Execution time: 115ms",
+      "--------------------------------------------------",
+      "> RUN 2: Next+FastAPI (380 files)",
+      "[ingest] Discovered 380 files (186 ignored)",
+      "[assemble] Knapsack threshold reached (80%). Applying deep semantic summarization.",
+      "✓ 14 files verbatim, 42 signatures, 89 summarized",
+      "✓ Compressed: 520,000 -> 39,800 tokens (13:1)",
+      "✓ Execution time: 820ms",
+      "--------------------------------------------------",
+      "> RUN 3: Monorepo (2400 files)",
+      "[ingest] Discovered 2,400 files (1,847 ignored)",
+      "[assemble] Dynamic limits triggered. Forcing Level 3 Aggressive reduction on outer modules.",
+      "[assemble] Generating chunks... 6 chunks mapped to manifest.json",
+      "✓ Compressed: 3,200,000 -> 118,000 tokens (27:1)",
+      "✓ Execution time: 4100ms",
+      "--------------------------------------------------",
+      "Generating matplotlib charts...",
+      "Exporting to repomd_benchmark_report.docx... [DONE]",
+      "BENCHMARK COMPLETE. Exiting 0."
+    ];
+    let i = 0;
+    const term = document.getElementById('terminal');
+    function typeLine() {
+      if (i < lines.length) {
+        let p = document.createElement('div');
+        p.innerText = lines[i++];
+        term.appendChild(p);
+        window.scrollTo(0, document.body.scrollHeight);
+        setTimeout(typeLine, Math.random() * 200 + 50);
+      }
+    }
+    setTimeout(typeLine, 500);
+  </script>
+</body>
+</html>
