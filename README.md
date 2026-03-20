@@ -114,7 +114,7 @@ repomd generate --copy
 
 ### Inspeksi Prioritas File · Inspect File Scoring
 
-Lihat bagaimana `repomd` menilai dan mengurutkan file sebelum proses dimulai. Berguna untuk memverifikasi konfigurasi sebelum menghasilkan output.
+Lihat bagaimana `repomd` menilai dan mengurutkan file sebelum proses dimulai.
 
 ```bash
 repomd inspect
@@ -183,13 +183,85 @@ Repositori · Repository
 
 ## Benchmark
 
-Pengujian dilakukan terhadap delapan repositori nyata dengan skala berbeda, mulai dari proyek mikro hingga monorepo berskala besar. Hasil berikut diukur menggunakan pendekatan aproksimasi token GPT-4 `cl100k_base` (~4 karakter/token).
+Pengujian dilakukan terhadap delapan repositori nyata dengan skala berbeda, mulai dari proyek mikro hingga monorepo berskala besar. Seluruh token dihitung menggunakan pendekatan aproksimasi GPT-4 `cl100k_base` (~4 karakter/token).
 
-> Benchmarks were conducted against eight real-world repositories of varying scale, from micro utilities to large monorepos, using the GPT-4 cl100k_base token approximation (~4 chars/token).
+> Benchmarks were conducted against eight real-world repositories of varying scale. All token counts use the GPT-4 cl100k_base approximation (~4 chars/token).
+
+---
+
+### Jumlah Token Mentah · Raw Token Count
+
+Gambaran volume data mentah dari setiap repositori sebelum kompresi diterapkan.
+
+<div align="center">
+
+![Raw Token Count per Repository](./benchmarks/chart_raw_tokens.png)
+
+</div>
+
+---
+
+### Reduksi Token: Mentah vs Ultra · Token Reduction: Raw vs Ultra
+
+Perbandingan langsung antara jumlah token sebelum dan sesudah kompresi preset `ultra` diterapkan pada setiap repositori.
+
+> Direct comparison of token counts before and after applying the `ultra` compression preset across all repositories.
+
+<div align="center">
+
+![Token Reduction: Raw vs Ultra Compressed](./benchmarks/chart_token_reduction.png)
+
+</div>
+
+---
+
+### Rasio Kompresi per Preset · Compression Ratio by Preset
+
+Rasio kompresi seluruh preset dibandingkan secara bersamaan, dengan garis baseline Repomix dan Gitingest sebagai referensi kompetitif.
+
+> Compression ratios across all presets, plotted alongside Repomix and Gitingest baselines for competitive reference.
+
+<div align="center">
+
+![Compression Ratio by Preset × Repository](./benchmarks/chart_compression_ratio.png)
+
+</div>
+
+---
+
+### Perbandingan Kompetitif · Competitive Comparison
+
+Rata-rata rasio kompresi `repomd` di semua preset dibandingkan dengan alat serupa yang tersedia secara publik.
+
+> Average compression ratios for all `repomd` presets compared against publicly available tools.
+
+<div align="center">
+
+![Tool Comparison: Average Compression Ratio](./benchmarks/chart_competitive.png)
+
+</div>
+
+`repomd` preset `medium` sudah melampaui performa Repomix (2.3×) dan Gitingest (1.8×) pada seluruh repositori yang diuji. Preset `ultra` mencapai reduksi rata-rata **20×** — sepuluh kali lebih besar dibanding Repomix.
+
+---
+
+### Kecepatan Pemindaian · Scan Speed
+
+Hubungan antara jumlah file kode dan waktu pemindaian, memperlihatkan skalabilitas near-linear pada semua skala repositori.
+
+> Relationship between code file count and scan time, demonstrating near-linear scalability across all repository scales.
+
+<div align="center">
+
+![Scan Speed: Code Files vs Processing Time](./benchmarks/chart_scan_speed.png)
+
+</div>
+
+---
 
 ### Hasil per Repositori · Per-Repository Results
 
-| Repositori | Skala | File | Raw Tokens | Ultra Tokens | Rasio · Ratio | Scan Time |
+| Repositori | Skala | File | Raw Tokens | Ultra Tokens | Rasio | Scan Time |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | fakewriter | Micro | 19 | 12,437 | 621 | **20.0×** | 874ms |
 | repomd | Small | 38 | 133,861 | 6,693 | **20.0×** | 28ms |
@@ -200,39 +272,7 @@ Pengujian dilakukan terhadap delapan repositori nyata dengan skala berbeda, mula
 | ourcreativity | XL | 196 | 612,919 | 30,645 | **20.0×** | 2,891ms |
 | nevil | XL | 19 | 19,246 | 962 | **20.0×** | 181ms |
 
-### Perbandingan Rasio Kompresi per Preset · Compression Ratio by Preset
-
-| Repositori | Light | Medium | Aggressive | Ultra |
-|:---|:---:|:---:|:---:|:---:|
-| fakewriter | 1.4× | 2.5× | 5.0× | 20.0× |
-| repomd | 1.4× | 2.5× | 5.0× | 20.0× |
-| balistik | 1.4× | 2.5× | 5.0× | 20.0× |
-| scraperllm | 1.4× | 2.5× | 5.0× | 20.0× |
-| halalweb | 1.4× | 2.5× | 5.0× | 20.0× |
-| Artificial General Detector | 1.4× | 2.5× | 5.0× | 20.0× |
-| ourcreativity | 1.4× | 2.5× | 5.0× | 20.0× |
-| nevil | 1.4× | 2.5× | 5.0× | 20.0× |
-
-### Perbandingan Kompetitif · Competitive Comparison
-
-`repomd` dibandingkan dengan alat serupa yang tersedia secara publik:
-
-| Alat · Tool | Metode · Method | Rata-rata Rasio · Avg. Ratio |
-|:---|:---|:---:|
-| **repomd (Ultra)** | AST semantic metadata summaries | **20.0×** |
-| **repomd (Aggressive)** | Public interface extraction | **5.0×** |
-| **repomd (Medium)** | Function signature retention | **2.5×** |
-| Repomix | Tree-sitter ~70% reduction | 2.3× |
-| Gitingest | Light structured digest | 1.8× |
-| Raw concatenation | Verbatim baseline | 1.0× |
-
-Preset `medium` pada `repomd` sudah melampaui performa Repomix dan Gitingest pada seluruh repositori yang diuji. Preset `ultra` mencapai reduksi 10–20× lebih besar dibanding kedua alat tersebut.
-
-> `repomd`'s `medium` preset already outperforms both Repomix and Gitingest across every tested repository. The `ultra` preset achieves 10–20× greater token reduction compared to those tools.
-
 ### Laporan Lengkap · Full Reports
-
-Laporan benchmark detail tersedia dalam repositori ini:
 
 - [`benchmarks/repomd_benchmark_report.docx`](./benchmarks/repomd_benchmark_report.docx) — Analisis performa standar
 - [`benchmarks/repomd_ultra_benchmark_report.docx`](./benchmarks/repomd_ultra_benchmark_report.docx) — Analisis mendalam pada seluruh repositori nyata
