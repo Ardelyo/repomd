@@ -22,7 +22,7 @@ pub fn compress_content(
     match level {
         1 => level_1_clean(content),
         2 => level_2_structural(content, extension),
-        3 | 4 => level_3_semantic(content, _role, extension),
+        3 | 4 => level_3_semantic(content, role, extension),
         _ => content.to_string(),
     }
 }
