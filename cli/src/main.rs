@@ -3,10 +3,11 @@ use comfy_table::{modifiers::UTF8_ROUND_CORNERS, presets::UTF8_FULL, Cell, Color
 use console::{style, Emoji};
 use dialoguer::{theme::ColorfulTheme, Select};
 use indicatif::{ProgressBar, ProgressStyle};
-use repomd_core::{generate_with_stats, preset_name, Config, FileDetail};
+use repomd_core::{generate_with_stats, preset_name, Config};
 use std::path::PathBuf;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 use tokio::sync::oneshot;
+
 
 
 // ─── Emoji Constants ────────────────────────────────────────────────────────
@@ -754,14 +755,16 @@ async fn run_update_command() -> anyhow::Result<()> {
     }
     
     pb.finish_with_message("SYSTEM FULLY OPTIMIZED. RESTART REQUIRED.");
-    println!("\n  {} {}\n", CHECK, style("Successfully updated to v0.2.1").green().bold());
+    println!("\n  {} {}\n", CHECK, style("Successfully updated to v1.6.2").green().bold());
     
     Ok(())
 }
 
+
 // ─── Main Entry ─────────────────────────────────────────────────────────────
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     // Start update check in background
@@ -773,7 +776,12 @@ fn main() -> anyhow::Result<()> {
 
     match cli.command {
         Some(Commands::Generate(args)) => {
-            if let Ok(Some(version)) = rx.try_recv() {
+            // Give the update check a tiny window to resolve before starting generation messages
+            let update = match tokio::time::timeout(Duration::from_millis(50), &mut rx).await {
+                Ok(Ok(v)) => v,
+                _ => None,
+            };
+            if let Some(version) = update {
                 print_update_banner(&version);
             }
             run_generate(args)?;
@@ -783,8 +791,7 @@ fn main() -> anyhow::Result<()> {
         Some(Commands::Update) => run_update_command().await?,
         None => {
             // Check update before wizard if possible
-            // Wait a tiny bit for the check
-            let update = match tokio::time::timeout(Duration::from_millis(200), rx).await {
+            let update = match tokio::time::timeout(Duration::from_millis(200), &mut rx).await {
                 Ok(Ok(v)) => v,
                 _ => None,
             };
@@ -792,6 +799,7 @@ fn main() -> anyhow::Result<()> {
             if let Some(version) = update {
                 print_update_banner(&version);
             }
+
 
             // No subcommand: launch interactive wizard or smart default
             let is_tty = console::Term::stdout().is_term();
