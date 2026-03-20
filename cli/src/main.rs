@@ -303,8 +303,14 @@ fn print_summary(
         Cell::new(format!("{}ms", stats.processing_time_ms)),
     ]);
     table.add_row(vec![
-        Cell::new("Output File").fg(Color::Cyan),
-        Cell::new(output_path.display().to_string()).fg(Color::White),
+        Cell::new("Absolute Path").fg(Color::Cyan),
+        Cell::new(
+            stats
+                .absolute_output_path
+                .as_deref()
+                .unwrap_or("unknown"),
+        )
+        .fg(Color::White),
     ]);
 
     if copied {
@@ -335,6 +341,7 @@ fn print_summary_json(
         "output_bytes": output_bytes,
         "processing_time_ms": stats.processing_time_ms,
         "output_file": output_path.display().to_string(),
+        "absolute_output_path": stats.absolute_output_path,
         "clipboard": copied,
     });
     println!("{}", serde_json::to_string_pretty(&json).unwrap());

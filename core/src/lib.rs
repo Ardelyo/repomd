@@ -45,6 +45,7 @@ pub struct GenerationStats {
     pub preset_level: u8,
     pub processing_time_ms: u128,
     pub output_bytes: usize,
+    pub absolute_output_path: Option<String>,
     /// Per-file info for verbose/inspect mode
     pub file_details: Vec<FileDetail>,
 }
@@ -132,6 +133,15 @@ pub fn generate_with_stats(config: Config) -> anyhow::Result<GenerateResult> {
 
     let markdown_len = markdown.len();
 
+    let absolute_output_path = config.output_path.as_ref().map(|p| {
+        std::env::current_dir()
+            .ok()
+            .map(|cwd| cwd.join(p))
+            .unwrap_or_else(|| p.clone())
+            .to_string_lossy()
+            .to_string()
+    });
+
     Ok(GenerateResult {
         markdown,
         stats: GenerationStats {
@@ -144,6 +154,7 @@ pub fn generate_with_stats(config: Config) -> anyhow::Result<GenerateResult> {
             preset_level,
             processing_time_ms: elapsed,
             output_bytes: markdown_len,
+            absolute_output_path,
             file_details,
         },
     })
