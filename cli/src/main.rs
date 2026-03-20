@@ -11,7 +11,9 @@ use tokio::sync::oneshot;
 
 
 // ─── Emoji Constants ────────────────────────────────────────────────────────
+static BOLT: Emoji<'_, '_> = Emoji("⚡", "*");
 static CHECK: Emoji<'_, '_> = Emoji("✔ ", "√ ");
+
 static CLIP: Emoji<'_, '_> = Emoji("📋", "=");
 
 static WRITE: Emoji<'_, '_> = Emoji("💾", ">");
@@ -348,8 +350,9 @@ fn print_summary_json(
         "token_budget": stats.token_budget,
         "output_bytes": output_bytes,
         "processing_time_ms": stats.processing_time_ms,
-        "output_file": output_path.display().to_string(),
+        "output_file": _output_path.display().to_string(),
         "absolute_output_path": stats.absolute_output_path,
+
         "clipboard": copied,
     });
     println!("{}", serde_json::to_string_pretty(&json).unwrap());
