@@ -1,6 +1,7 @@
 [package]
 name = "repomd-core"
-version = "0.2.0"
+version = "1.6.2"
+
 edition = "2021"
 description = "Core semantic compression and repository analysis for repomd"
 authors = ["Ardelyo <rilardelyo@gmail.com>"]
