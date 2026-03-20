@@ -1,85 +1,97 @@
 <div align="center">
 
-<h1>📦 repomd</h1>
+<h1>repomd</h1>
 
-<p><strong>Any repo. One command. Perfect context.</strong></p>
-
-<p>Transform any codebase into a single token-optimized Markdown file — ready to paste into ChatGPT, Claude, or Gemini.</p>
+<p><strong>Repositori apa pun. Satu perintah. Konteks sempurna.</strong><br/>
+<em>Any repository. One command. Perfect context.</em></p>
 
 [![Crates.io](https://img.shields.io/crates/v/repomd?style=flat-square&color=fc8d62)](https://crates.io/crates/repomd)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
-[![Build](https://img.shields.io/github/actions/workflow/status/ardelyo/repomd/ci.yml?style=flat-square)](https://github.com/ardelyo/repomd/actions)
-[![Made in Indonesia](https://img.shields.io/badge/Made%20in-Indonesia-red?style=flat-square)](https://github.com/ardelyo)
-[![OurCreativity](https://img.shields.io/badge/Supported%20by-OurCreativity-orange?style=flat-square)](https://ourcreativty.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ardelyo/repomd/ci.yml?style=flat-square)](https://github.com/ardelyo/repomd/actions)
+[![Made in Indonesia](https://img.shields.io/badge/Made%20in-Indonesia-cc0001?style=flat-square)](https://github.com/ardelyo)
+[![Supported by OurCreativity](https://img.shields.io/badge/Supported%20by-OurCreativity%20Organization-f97316?style=flat-square)](https://ourcreativty.org)
 
 <br/>
 
-[快速开始 · Quick Start](#-quick-start) &nbsp;|&nbsp;
-[用法 · Usage](#-usage) &nbsp;|&nbsp;
-[工作原理 · How It Works](#-how-it-works) &nbsp;|&nbsp;
-[参数 · Flags](#-advanced-flags)
+[Mulai Cepat · Quick Start](#mulai-cepat--quick-start) &nbsp;·&nbsp;
+[Penggunaan · Usage](#penggunaan--usage) &nbsp;·&nbsp;
+[Cara Kerja · How It Works](#cara-kerja--how-it-works) &nbsp;·&nbsp;
+[Parameter · Flags](#parameter--flags)
 
 </div>
 
 ---
 
-## ✨ Features
+## Tentang · About
 
-- 🔍 **Smart File Scoring** — Every file gets a Context Priority Score (CPS) based on its role in the codebase
-- ⚡ **Dynamic Compression** — Tree-sitter style semantic compression, not blind truncation
-- 🌐 **Local & Remote** — Works on local directories or GitHub URLs directly
-- 📋 **Clipboard Support** — Skip the file, copy straight to your clipboard
-- 🎛️ **4 Presets** — Light, Medium, Aggressive, Ultra — pick your compression level
-- 🤖 **CI/CD Ready** — JSON output mode for pipeline integration
-- 🧠 **Knapsack Packing** — Tightly fits the most important files within your token budget
+`repomd` mengubah seluruh kode dalam repositori — baik lokal maupun remote — menjadi satu file Markdown yang dioptimalkan untuk token. Alat ini menilai kepentingan setiap file, mengompres konten secara semantik sesuai tekanan token, dan menghasilkan konteks repositori yang siap ditempel langsung ke ChatGPT, Claude, atau Gemini.
+
+> `repomd` transforms an entire codebase — local or remote — into a single token-optimized Markdown file. It evaluates file importance, applies semantic compression based on token pressure, and produces clean repository context ready to be pasted into any large language model interface.
 
 ---
 
-## 🚀 Quick Start
+## Fitur Utama · Key Features
 
-> **Requirement:** Rust must be installed — get it at [rustup.rs](https://rustup.rs)
+- **Penilaian File Cerdas** — Setiap file diberi Context Priority Score (CPS) berdasarkan perannya: kode sumber, konfigurasi, atau dokumentasi.
+- **Kompresi Semantik** — Bukan pemotongan acak. `repomd` menganalisis struktur kode dan hanya menghapus bagian yang paling tidak kritis.
+- **Lokal & Remote** — Bekerja dengan direktori lokal maupun URL GitHub secara langsung, tanpa perlu clone manual.
+- **Empat Level Preset** — Dari `light` hingga `ultra`, sesuaikan tingkat kompresi dengan kebutuhan token LLM kamu.
+- **Siap CI/CD** — Output format JSON tersedia untuk integrasi dengan pipeline otomatis.
+
+---
+
+## Mulai Cepat · Quick Start
+
+**Prasyarat · Requirement:** Pastikan Rust sudah terpasang. Dapatkan di [rustup.rs](https://rustup.rs).
 
 ```bash
+# Pasang secara global via Cargo
 # Install globally via Cargo
 cargo install --path cli
-
-# Run the interactive wizard
-repomd
 ```
 
----
-
-## 📖 Usage
-
-### Interactive Wizard
-
-The easiest way to get started. Just run `repomd` with no arguments:
+Setelah terpasang, jalankan wizard interaktif dengan:
 
 ```bash
 repomd
 ```
 
-The wizard will guide you through:
-- **Source** — current directory (`.`) or a GitHub URL
-- **Preset** — compression level (`light` / `medium` / `aggressive` / `ultra`)
-- **Budget** — token limit for your LLM (e.g. `50000`, `128000`, `200000`)
-- **Output** — save to `repo.md` or copy to clipboard
+---
+
+## Penggunaan · Usage
+
+### Wizard Interaktif · Interactive Wizard
+
+Cara termudah untuk memulai. Jalankan `repomd` tanpa argumen untuk membuka wizard yang memandu seluruh proses konfigurasi.
+
+```bash
+repomd
+```
+
+Wizard akan meminta input berikut secara berurutan:
+
+| Parameter | Keterangan · Description | Contoh · Example |
+|---|---|---|
+| **Sumber · Source** | Direktori lokal atau URL GitHub | `.` atau `https://github.com/user/repo` |
+| **Preset** | Tingkat kompresi | `light`, `medium`, `aggressive`, `ultra` |
+| **Anggaran · Budget** | Batas maksimum token | `50000`, `128000`, `200000` |
+| **Keluaran · Output** | Tujuan hasil | `repo.md` atau clipboard |
 
 ---
 
-### Generate from Local Directory
+### Buat dari Direktori Lokal · Generate from Local Directory
+
+Menghasilkan `repo.md` dari direktori aktif dengan preset `medium` dan batas 50 ribu token.
 
 ```bash
 repomd generate
 ```
 
-Generates `repo.md` from the current directory using the medium preset with a 50k token budget.
-
 ---
 
-### Generate from a GitHub URL
+### Buat dari URL GitHub · Generate from a GitHub URL
 
-No cloning needed. Paste the URL directly — `repomd` handles the rest and cleans up automatically.
+Tidak perlu clone manual. Tempel URL langsung — `repomd` akan melakukan clone sementara, mengekstrak konteks, lalu membersihkan hasil clone secara otomatis.
 
 ```bash
 repomd generate https://github.com/torvalds/linux -p ultra -t 100000
@@ -87,7 +99,9 @@ repomd generate https://github.com/torvalds/linux -p ultra -t 100000
 
 ---
 
-### Copy Directly to Clipboard
+### Salin Langsung ke Clipboard · Copy to Clipboard
+
+Lewati pembuatan file dan salin hasil langsung ke clipboard.
 
 ```bash
 repomd generate --copy
@@ -95,93 +109,142 @@ repomd generate --copy
 
 ---
 
-### Inspect File Scoring
+### Inspeksi Prioritas File · Inspect File Scoring
 
-Preview how `repomd` prioritizes your files before generating:
+Lihat bagaimana `repomd` menilai dan mengurutkan file sebelum proses dimulai.
 
 ```bash
 repomd inspect
 ```
 
-Displays an interactive dashboard with each file's Context Priority Score (CPS) and estimated category (Source / Config / Docs).
+Perintah ini menampilkan dashboard interaktif yang menunjukkan Context Priority Score (CPS) dan kategori setiap file — Source, Config, atau Docs.
 
 ---
 
-## 🛠️ Advanced Flags
+## Parameter · Flags
 
-| Flag | Description |
+| Flag | Keterangan · Description |
 |---|---|
-| `-t, --tokens <NUM>` | Set maximum token budget (default: `50,000`) |
-| `-p, --preset <STR>` | `light` · `medium` · `aggressive` · `ultra` |
-| `--dry-run` | Preview output without writing any files |
-| `--copy` | Copy result directly to clipboard |
-| `-v, --verbose` | Show per-file compression stats in summary |
-| `-q, --quiet` | Suppress spinners and dashboard output |
-| `--json` | Output generation stats as JSON (for CI/CD) |
+| `-t, --tokens <NUM>` | Batas maksimum token · Max token budget (default: `50,000`) |
+| `-p, --preset <STR>` | Level kompresi: `light` · `medium` · `aggressive` · `ultra` |
+| `--dry-run` | Pratinjau hasil tanpa menulis file apapun |
+| `--copy` | Salin hasil langsung ke clipboard |
+| `-v, --verbose` | Tampilkan statistik kompresi tiap file di dashboard |
+| `-q, --quiet` | Sembunyikan spinner dan output dashboard |
+| `--json` | Keluarkan statistik generasi dalam format JSON |
 
 ---
 
-## 🧠 How It Works
+## Cara Kerja · How It Works
 
 ```
-📁 Repository
-      │
-      ▼
-  ① Discovery ──── Scans all files, respects .gitignore natively
-      │
-      ▼
-  ② Scoring ────── Assigns a Context Priority Score (CPS) per file
-      │              Source > Config > Docs
-      ▼
-  ③ Compression ── Semantic compression based on preset
-      │              Light → Medium → Aggressive → Ultra
-      ▼
-  ④ Assembly ───── Knapsack-packs files into one .md within token budget
-      │
-      ▼
-  📄 repo.md  /  📋 Clipboard
+Repositori / Repository
+        │
+        ▼
+  [1] Penemuan · Discovery
+        Memindai seluruh direktori, menghormati .gitignore secara native.
+        │
+        ▼
+  [2] Penilaian · Scoring
+        Setiap file diberi Context Priority Score (CPS).
+        Source > Config > Docs
+        │
+        ▼
+  [3] Kompresi · Compression
+        Kompresi semantik berdasarkan preset yang dipilih.
+        Light → Medium → Aggressive → Ultra
+        │
+        ▼
+  [4] Perakitan · Assembly
+        File dikemas secara optimal ke dalam satu .md
+        dalam batas token menggunakan algoritma knapsack.
+        │
+        ▼
+  repo.md  /  Clipboard
 ```
 
-### Compression Presets
+### Level Kompresi · Compression Levels
 
-| Preset | What gets stripped |
+| Preset | Yang Dihapus · What Gets Stripped |
 |---|---|
-| `light` | Whitespace & comments |
-| `medium` | Implementation bodies — keeps structs, enums, signatures |
-| `aggressive` | Everything except public interfaces |
-| `ultra` | Full file replaced with a `"Summarized File"` metadata entry |
+| `light` | Spasi berlebih dan komentar · Whitespace and comments |
+| `medium` | Isi fungsi — menyimpan struct, enum, dan signature |
+| `aggressive` | Semua kecuali antarmuka publik · Everything except public interfaces |
+| `ultra` | Seluruh file diganti dengan ringkasan metadata singkat |
 
 ---
 
-## 📂 Repository Structure
+## Benchmark & Laporan · Benchmarks & Reports
 
-- `cli/` — Command-line interface logic (Rust)
-- `core/` — Core processing engine (Rust)
-- `benchmarks/` — Performance testing scripts and results
-- `docs/` — Detailed reports and demonstrations
-- `examples/` — Sample outputs and test files
-- `api/` — API server implementation
-- `web/` — Web dashboard (if applicable)
+Saksikan bagaimana `repomd` mengoptimalkan kode kamu hingga batas maksimal.
+
+### Visualisasi · Visualizations
+
+<div align="center">
+
+| Kinerja Scan · Scan Performance | Penghematan Token · Token Savings |
+|:---:|:---:|
+| ![Scan Speed](./benchmarks/chart_scan_speed.png) | ![Token Reduction](./benchmarks/chart_token_reduction.png) |
+| *Kecepatan pemindaian (ms)* | *Reduksi token per preset* |
+
+| Rasio Kompresi · Compression Ratio | Token Mentah · Raw Tokens |
+|:---:|:---:|
+| ![Compression Ratio](./benchmarks/chart_compression_ratio.png) | ![Raw Tokens](./benchmarks/chart_raw_tokens.png) |
+| *Efisiensi ruang* | *Volume data sebelum kompresi* |
+
+</div>
+
+### Statistik Performa · Performance Statistics
+
+Hasil pengujian pada berbagai skala repositori (diukur pada Intel i9-13900K):
+
+| Repositori · Repository | Ukuran · Size | File | Raw Tokens | Ultra (ratio) | Scan Time |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| **fakewriter** | Micro | 19 | 12k | 621 (20x) | 874ms |
+| **repomd** | Small | 38 | 133k | 6.6k (20x) | 27ms |
+| **Artificial General Detector** | Large | 98 | 523k | 26k (20x) | 606ms |
+| **ourcreativity** | XL | 196 | 612k | 30k (20x) | 2.8s |
+
+### Perbandingan Kompetitif · Competitive Analysis
+
+`repomd` dirancang untuk mengungguli alat serupa dalam hal kepadatan konteks:
+
+| Alat · Tool | Rasio Kompresi · Ratio | Metode · Method |
+|:---|:---:|:---|
+| **repomd (Ultra)** | **20.0x** | **Semantic metadata summaries** |
+| **repomd (Aggressive)** | **5.0x** | **Public interface extraction** |
+| **repomix** | 2.3x | Tree-sitter (~70% reduction) |
+| **gitingest** | 1.8x | Light structured digest |
+| **raw cat** | 1.0x | Verbatim baseline |
+
+</div>
+
+### Laporan Detail · Detailed Reports
+
+Pelajari hasil pengujian mendalam kami pada berbagai ukuran repositori:
+
+- 📊 [**Laporan Benchmark Standar**](./docs/repomd_benchmark_report.docx) — Analisis performa dasar.
+- 🚀 [**Laporan Ultra Benchmark**](./docs/repomd_ultra_benchmark_report.docx) — Batas ekstrem kompresi pada repo masif.
+- 📝 [**Demo OurCreativity**](./docs/ourcreativity_demo.md) — Contoh output nyata pada proyek OurCreativity.
 
 ---
 
-## 🤝 Contributing
+## Kontribusi · Contributing
 
-Contributions, issues, and feature requests are welcome.
-Feel free to check the [issues page](https://github.com/ardelyo/repomd/issues).
+Kontribusi, laporan masalah, dan permintaan fitur sangat disambut baik. Silakan buka [issue](https://github.com/ardelyo/repomd/issues) atau ajukan pull request.
 
 ---
 
-## 📄 License
+## Lisensi · License
 
-Distributed under the MIT License. See [`LICENSE`](./LICENSE) for details.
+Didistribusikan di bawah Lisensi MIT. Lihat [`LICENSE`](./LICENSE) untuk informasi lebih lanjut.
 
 ---
 
 <div align="center">
 
-Made with ❤️ by **Ardelyo** · Indonesia 🇮🇩
+Dibuat oleh **Ardelyo** &nbsp;·&nbsp; Indonesia 🇮🇩
 
-Supported by **OurCreativity Organization**
+Didukung oleh **OurCreativity Organization**
 
 </div>
