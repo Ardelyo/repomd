@@ -22,7 +22,7 @@ pub fn compress_content(
     match level {
         1 => level_1_clean(content),
         2 => level_2_structural(content, extension),
-        3 | 4 => level_3_semantic(content, role, extension),
+        3 | 4 => level_3_semantic(content, _role, extension),
         _ => content.to_string(),
     }
 }
@@ -83,7 +83,8 @@ fn level_2_structural(content: &str, extension: Option<&str>) -> String {
     signatures.join("\n")
 }
 
-fn level_3_semantic(content: &str, role: &FileRole, extension: Option<&str>) -> String {
+fn level_3_semantic(content: &str, _role: &FileRole, extension: Option<&str>) -> String {
+
     // Instead of nuking the file, we preserve all structural signatures (imports, functions, classes).
     // This provides massive context to the AI without wasting tokens on implementation details.
     let structural = level_2_structural(content, extension);

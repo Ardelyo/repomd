@@ -11,10 +11,9 @@ use tokio::sync::oneshot;
 
 
 // ─── Emoji Constants ────────────────────────────────────────────────────────
-static BOLT: Emoji<'_, '_> = Emoji("⚡", "*");
-static FOLDER: Emoji<'_, '_> = Emoji("📂", ">");
 static CHECK: Emoji<'_, '_> = Emoji("✔ ", "√ ");
 static CLIP: Emoji<'_, '_> = Emoji("📋", "=");
+
 static WRITE: Emoji<'_, '_> = Emoji("💾", ">");
 static SEARCH: Emoji<'_, '_> = Emoji("🔍", "?");
 static ROCKET: Emoji<'_, '_> = Emoji("🚀", "!");
@@ -239,10 +238,11 @@ fn run_wizard() -> anyhow::Result<GenerateArgs> {
 // ─── Summary Dashboard ─────────────────────────────────────────────────────
 fn print_summary(
     stats: &repomd_core::GenerationStats,
-    output_path: &PathBuf,
+    _output_path: &PathBuf,
     copied: bool,
     output_bytes: usize,
 ) {
+
     println!();
     println!(
         "  {} {}",
@@ -333,10 +333,11 @@ fn print_summary(
 
 fn print_summary_json(
     stats: &repomd_core::GenerationStats,
-    output_path: &PathBuf,
+    _output_path: &PathBuf,
     copied: bool,
     output_bytes: usize,
 ) {
+
     let json = serde_json::json!({
         "preset": stats.preset_name,
         "preset_level": stats.preset_level,
