@@ -7,8 +7,11 @@
   <em>Any repository. One command. Perfect context.</em>
 </p>
 
-[![Crates.io](https://img.shields.io/crates/v/repomd?style=flat-square&color=fc8d62)](https://crates.io/crates/repomd)
+[![Crates.io](https://img.shields.io/crates/v/repomd?style=flat-square&color=86efac)](https://crates.io/crates/repomd)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](./CONTRIBUTING.md)
+[![Security Policy](https://img.shields.io/badge/security-policy-red?style=flat-square)](./SECURITY.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-purple?style=flat-square)](./CODE_OF_CONDUCT.md)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/ardelyo/repomd/ci.yml?style=flat-square)](https://github.com/ardelyo/repomd/actions)
 [![Made in Indonesia](https://img.shields.io/badge/Made%20in-Indonesia-cc0001?style=flat-square)](https://github.com/ardelyo)
 [![Supported by OurCreativity](https://img.shields.io/badge/Supported%20by-OurCreativity%20Organization-f97316?style=flat-square)](https://ourcreativty.org)
@@ -20,7 +23,7 @@
 [Penggunaan · Usage](#penggunaan--usage) &nbsp;·&nbsp;
 [Cara Kerja · How It Works](#cara-kerja--how-it-works) &nbsp;·&nbsp;
 [Benchmark](#benchmark) &nbsp;·&nbsp;
-[Parameter · Flags](#parameter--flags)
+[Berkontribusi · Contribute](./CONTRIBUTING.md)
 
 </div>
 

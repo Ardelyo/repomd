@@ -1,7 +1,14 @@
 [package]
 name = "repomd-core"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
+description = "Core semantic compression and repository analysis for repomd"
+authors = ["Ardelyo <rilardelyo@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/ardelyo/repomd"
+homepage = "https://github.com/ardelyo/repomd"
+keywords = ["llm", "context", "repository", "compression", "ai"]
+categories = ["development-tools", "command-line-utilities"]
 
 [dependencies]
 tempfile = "3.10"

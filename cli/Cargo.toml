@@ -2,8 +2,13 @@
 name = "repomd"
 version = "0.2.0"
 edition = "2021"
-description = "Any repo. One command. Perfect context."
-authors = ["repomd contributors"]
+description = "Any repo. One command. Perfect context. Semantic compression for LLMs."
+authors = ["Ardelyo <rilardelyo@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/ardelyo/repomd"
+homepage = "https://github.com/ardelyo/repomd"
+keywords = ["llm", "context", "repository", "compression", "ai"]
+categories = ["development-tools", "command-line-utilities"]
 
 [[bin]]
 name = "repomd"
