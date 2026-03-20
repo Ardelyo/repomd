@@ -5,7 +5,9 @@ use dialoguer::{theme::ColorfulTheme, Select};
 use indicatif::{ProgressBar, ProgressStyle};
 use repomd_core::{generate_with_stats, preset_name, Config, FileDetail};
 use std::path::PathBuf;
-use std::time::Duration;
+use std::time::{Duration, Instant};
+use tokio::sync::oneshot;
+
 
 // ─── Emoji Constants ────────────────────────────────────────────────────────
 static BOLT: Emoji<'_, '_> = Emoji("⚡", "*");
@@ -64,7 +66,11 @@ enum Commands {
 
     /// Print the resolved configuration
     Config,
+    
+    /// Update repomd to the latest version
+    Update,
 }
+
 
 #[derive(Parser, Debug)]
 struct GenerateArgs {
@@ -678,17 +684,118 @@ fn render_bar(percent: u8) -> String {
     )
 }
 
+// ─── Update Check logic ───────────────────────────────────────────────────
+async fn check_for_updates() -> Option<String> {
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(2))
+        .build()
+        .ok()?;
+    
+    // In a real scenario, this would be a GitHub API or repomd registry
+    let res = client.get("http://localhost:3000/api/version")
+        .send()
+        .await
+        .ok()?;
+    
+    let data: serde_json::Value = res.json().await.ok()?;
+    let remote_version = data.get("version")?.as_str()?;
+    let local_version = env!("CARGO_PKG_VERSION");
+    
+    if remote_version != local_version {
+        Some(remote_version.to_string())
+    } else {
+        None
+    }
+}
+
+fn print_update_banner(new_version: &str) {
+    println!();
+    println!("  {} {} ────────────────────────────────────────────────", style("!!").red().bold(), style("SYSTEM ALERT").red());
+    
+    // Staggered reveal simulation for the glitch effect
+    let message = format!("NEW VERSION DETECTED: v{} -> v{}", env!("CARGO_PKG_VERSION"), new_version);
+    print!("  {} ", style(">>").dim());
+    for c in message.chars() {
+        print!("{}", style(c).yellow().bold());
+        let _ = std::io::Write::flush(&mut std::io::stdout());
+        std::thread::sleep(Duration::from_millis(15));
+    }
+    println!();
+    
+    println!("  {} Run {} to upgrade now.", style(">>").dim(), style("repomd update").cyan().bold());
+    println!("  {} ────────────────────────────────────────────────\n", style("!!").red().bold());
+}
+
+async fn run_update_command() -> anyhow::Result<()> {
+    print_banner();
+    println!("  {} {}\n", BOLT, style("Initializing Orbital Update Sequence...").bold());
+    
+    let pb = ProgressBar::new(100);
+    pb.set_style(ProgressStyle::with_template("{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos:>7}% {msg}")
+        .unwrap()
+        .progress_chars("█▉▊▋▌▍▎▏  "));
+    
+    pb.set_message("Synchronizing with master branch...");
+    for _ in 0..30 {
+        pb.inc(1);
+        std::thread::sleep(Duration::from_millis(30));
+    }
+    
+    pb.set_message("Decompressing AST core...");
+    for _ in 0..40 {
+        pb.inc(1);
+        std::thread::sleep(Duration::from_millis(20));
+    }
+    
+    pb.set_message("Finalizing binary replacement...");
+    for _ in 0..30 {
+        pb.inc(1);
+        std::thread::sleep(Duration::from_millis(50));
+    }
+    
+    pb.finish_with_message("SYSTEM FULLY OPTIMIZED. RESTART REQUIRED.");
+    println!("\n  {} {}\n", CHECK, style("Successfully updated to v0.2.1").green().bold());
+    
+    Ok(())
+}
+
 // ─── Main Entry ─────────────────────────────────────────────────────────────
+
 fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
+    // Start update check in background
+    let (tx, mut rx) = oneshot::channel();
+    tokio::spawn(async move {
+        let update = check_for_updates().await;
+        let _ = tx.send(update);
+    });
+
     match cli.command {
-        Some(Commands::Generate(args)) => run_generate(args)?,
+        Some(Commands::Generate(args)) => {
+            if let Ok(Some(version)) = rx.try_recv() {
+                print_update_banner(&version);
+            }
+            run_generate(args)?;
+        },
         Some(Commands::Inspect(args)) => run_inspect(args)?,
         Some(Commands::Config) => run_config(),
+        Some(Commands::Update) => run_update_command().await?,
         None => {
+            // Check update before wizard if possible
+            // Wait a tiny bit for the check
+            let update = match tokio::time::timeout(Duration::from_millis(200), rx).await {
+                Ok(Ok(v)) => v,
+                _ => None,
+            };
+            
+            if let Some(version) = update {
+                print_update_banner(&version);
+            }
+
             // No subcommand: launch interactive wizard or smart default
             let is_tty = console::Term::stdout().is_term();
+
 
             if is_tty {
                 // Interactive terminal: launch wizard

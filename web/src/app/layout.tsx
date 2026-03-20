@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { UpdateManager } from '@/components/UpdateManager';
+
 
 export const metadata: Metadata = {
   title: 'repomd — The Codebase Context Compiler',
@@ -15,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <UpdateManager />
         <header className="header">
+
           <a href="/" className="logo">
             <span className="glitch-text" data-text="repomd">repomd</span>
           </a>
