@@ -32,6 +32,12 @@ htmlcov/
 *.pdf
 ultra_benchmark_dashboard.html
 
+# Allow official benchmark assets
+!/benchmarks/*.png
+!/benchmarks/*.docx
+!/benchmarks/benchmark_results.json
+!/docs/*.md
+
 ## 🌐 Web & Node
 node_modules/
 dist/
