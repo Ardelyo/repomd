@@ -22,7 +22,7 @@ pub fn compress_content(
     match level {
         1 => level_1_clean(content),
         2 => level_2_structural(content, extension),
-        3 | 4 => level_3_semantic(content, role),
+        3 | 4 => level_3_semantic(content, role, extension),
         _ => content.to_string(),
     }
 }
@@ -47,7 +47,7 @@ fn level_2_structural(content: &str, extension: Option<&str>) -> String {
     
     match ext {
         "rs" => {
-            let re = Regex::new(r"^(pub\s+)?(fn|struct|enum|trait)\s+[^{;]+").unwrap();
+            let re = Regex::new(r"^(pub\s+)?(fn|struct|enum|trait|impl|use)\s+[^{;]+").unwrap();
             for line in content.lines() {
                 if let Some(m) = re.find(line) {
                     signatures.push(format!("{} ...", m.as_str()));
@@ -55,7 +55,7 @@ fn level_2_structural(content: &str, extension: Option<&str>) -> String {
             }
         }
         "ts" | "js" | "jsx" | "tsx" => {
-            let re = Regex::new(r"^(export\s+)?(function|class|interface|type|const\s+\w+\s*=\s*(?:async\s*)?\([^)]*\)\s*=>)\s*").unwrap();
+            let re = Regex::new(r"^(export\s+)?(import|function|class|interface|type|const\s+\w+\s*=\s*(?:async\s*)?\([^)]*\)\s*=>)\s*").unwrap();
             for line in content.lines() {
                 if let Some(m) = re.find(line) {
                     signatures.push(format!("{} ...", m.as_str()));
@@ -63,7 +63,7 @@ fn level_2_structural(content: &str, extension: Option<&str>) -> String {
             }
         }
         "py" => {
-            let re = Regex::new(r"^(async\s+)?(def|class)\s+[^(:]+").unwrap();
+            let re = Regex::new(r"^(async\s+)?(def|class|import|from\s+[\w.]+\s+import)\s+[^(:]+").unwrap();
             for line in content.lines() {
                 if let Some(m) = re.find(line) {
                     signatures.push(format!("{} ...", m.as_str()));
@@ -83,6 +83,9 @@ fn level_2_structural(content: &str, extension: Option<&str>) -> String {
     signatures.join("\n")
 }
 
-fn level_3_semantic(content: &str, role: &FileRole) -> String {
-    format!("[Summarized File ({:?})] {} bytes removed to save tokens.", role, content.len())
+fn level_3_semantic(content: &str, role: &FileRole, extension: Option<&str>) -> String {
+    // Instead of nuking the file, we preserve all structural signatures (imports, functions, classes).
+    // This provides massive context to the AI without wasting tokens on implementation details.
+    let structural = level_2_structural(content, extension);
+    format!("// AI CONTEXT: Implementation bodies omitted. Structural signatures preserved.\n{}", structural)
 }

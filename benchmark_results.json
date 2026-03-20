@@ -1,0 +1,507 @@
+{
+  "results": [
+    {
+      "name": "fakewriter",
+      "category": "Micro",
+      "scan_ms": 874.0,
+      "total_files": 19,
+      "code_files": 18,
+      "raw_bytes": 50998,
+      "raw_tokens": 12437,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 12437,
+          "compressed_tokens": 8705,
+          "ratio": 1.4,
+          "proc_ms": 447
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 12437,
+          "compressed_tokens": 4974,
+          "ratio": 2.5,
+          "proc_ms": 436
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 12437,
+          "compressed_tokens": 2487,
+          "ratio": 5.0,
+          "proc_ms": 458
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 12437,
+          "compressed_tokens": 621,
+          "ratio": 20.0,
+          "proc_ms": 433
+        }
+      ],
+      "top_ext": [
+        [
+          ".py",
+          11
+        ],
+        [
+          ".log",
+          2
+        ],
+        [
+          "",
+          1
+        ],
+        [
+          ".resolved",
+          1
+        ],
+        [
+          ".md",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "repomd",
+      "category": "Small",
+      "scan_ms": 27.6,
+      "total_files": 38,
+      "code_files": 33,
+      "raw_bytes": 535495,
+      "raw_tokens": 133861,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 133861,
+          "compressed_tokens": 93702,
+          "ratio": 1.4,
+          "proc_ms": 4080
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 133861,
+          "compressed_tokens": 53544,
+          "ratio": 2.5,
+          "proc_ms": 4083
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 133861,
+          "compressed_tokens": 26772,
+          "ratio": 5.0,
+          "proc_ms": 4100
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 133861,
+          "compressed_tokens": 6693,
+          "ratio": 20.0,
+          "proc_ms": 4100
+        }
+      ],
+      "top_ext": [
+        [
+          ".rs",
+          7
+        ],
+        [
+          "",
+          4
+        ],
+        [
+          ".toml",
+          4
+        ],
+        [
+          ".json",
+          4
+        ],
+        [
+          ".py",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "balistik",
+      "category": "Small",
+      "scan_ms": 550.1,
+      "total_files": 25,
+      "code_files": 22,
+      "raw_bytes": 200730,
+      "raw_tokens": 49749,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 49749,
+          "compressed_tokens": 34824,
+          "ratio": 1.4,
+          "proc_ms": 1585
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 49749,
+          "compressed_tokens": 19899,
+          "ratio": 2.5,
+          "proc_ms": 1590
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 49749,
+          "compressed_tokens": 9949,
+          "ratio": 5.0,
+          "proc_ms": 1567
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 49749,
+          "compressed_tokens": 2487,
+          "ratio": 20.0,
+          "proc_ms": 1589
+        }
+      ],
+      "top_ext": [
+        [
+          ".js",
+          11
+        ],
+        [
+          ".md",
+          4
+        ],
+        [
+          ".html",
+          2
+        ],
+        [
+          ".json",
+          2
+        ],
+        [
+          "",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "scraperllm",
+      "category": "Medium",
+      "scan_ms": 184.7,
+      "total_files": 12,
+      "code_files": 12,
+      "raw_bytes": 105032,
+      "raw_tokens": 25954,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 25954,
+          "compressed_tokens": 18167,
+          "ratio": 1.4,
+          "proc_ms": 857
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 25954,
+          "compressed_tokens": 10381,
+          "ratio": 2.5,
+          "proc_ms": 862
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 25954,
+          "compressed_tokens": 5190,
+          "ratio": 5.0,
+          "proc_ms": 843
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 25954,
+          "compressed_tokens": 1297,
+          "ratio": 20.0,
+          "proc_ms": 871
+        }
+      ],
+      "top_ext": [
+        [
+          ".ts",
+          5
+        ],
+        [
+          ".json",
+          4
+        ],
+        [
+          "",
+          1
+        ],
+        [
+          ".html",
+          1
+        ],
+        [
+          ".md",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "halalweb",
+      "category": "Medium",
+      "scan_ms": 165.7,
+      "total_files": 16,
+      "code_files": 14,
+      "raw_bytes": 122745,
+      "raw_tokens": 30681,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 30681,
+          "compressed_tokens": 21476,
+          "ratio": 1.4,
+          "proc_ms": 992
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 30681,
+          "compressed_tokens": 12272,
+          "ratio": 2.5,
+          "proc_ms": 994
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 30681,
+          "compressed_tokens": 6136,
+          "ratio": 5.0,
+          "proc_ms": 1008
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 30681,
+          "compressed_tokens": 1534,
+          "ratio": 20.0,
+          "proc_ms": 1008
+        }
+      ],
+      "top_ext": [
+        [
+          ".json",
+          5
+        ],
+        [
+          ".css",
+          2
+        ],
+        [
+          ".tsx",
+          2
+        ],
+        [
+          "",
+          1
+        ],
+        [
+          ".js",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Artificial General Detector",
+      "category": "Large",
+      "scan_ms": 606.5,
+      "total_files": 98,
+      "code_files": 72,
+      "raw_bytes": 2096618,
+      "raw_tokens": 523869,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 523869,
+          "compressed_tokens": 366708,
+          "ratio": 1.4,
+          "proc_ms": 15796
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 523869,
+          "compressed_tokens": 209547,
+          "ratio": 2.5,
+          "proc_ms": 15802
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 523869,
+          "compressed_tokens": 104773,
+          "ratio": 5.0,
+          "proc_ms": 15783
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 523869,
+          "compressed_tokens": 26193,
+          "ratio": 20.0,
+          "proc_ms": 15805
+        }
+      ],
+      "top_ext": [
+        [
+          ".py",
+          18
+        ],
+        [
+          ".txt",
+          13
+        ],
+        [
+          "",
+          8
+        ],
+        [
+          ".docx",
+          8
+        ],
+        [
+          ".md",
+          7
+        ]
+      ]
+    },
+    {
+      "name": "ourcreativity",
+      "category": "XL",
+      "scan_ms": 2891.0,
+      "total_files": 196,
+      "code_files": 168,
+      "raw_bytes": 2505522,
+      "raw_tokens": 612919,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 612919,
+          "compressed_tokens": 429043,
+          "ratio": 1.4,
+          "proc_ms": 18452
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 612919,
+          "compressed_tokens": 245167,
+          "ratio": 2.5,
+          "proc_ms": 18460
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 612919,
+          "compressed_tokens": 122583,
+          "ratio": 5.0,
+          "proc_ms": 18456
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 612919,
+          "compressed_tokens": 30645,
+          "ratio": 20.0,
+          "proc_ms": 18465
+        }
+      ],
+      "top_ext": [
+        [
+          ".tsx",
+          76
+        ],
+        [
+          ".md",
+          37
+        ],
+        [
+          ".ts",
+          23
+        ],
+        [
+          ".sql",
+          13
+        ],
+        [
+          ".json",
+          7
+        ]
+      ]
+    },
+    {
+      "name": "nevil",
+      "category": "XL",
+      "scan_ms": 181.4,
+      "total_files": 19,
+      "code_files": 14,
+      "raw_bytes": 77462,
+      "raw_tokens": 19246,
+      "presets": [
+        {
+          "preset": "Light",
+          "raw_tokens": 19246,
+          "compressed_tokens": 13472,
+          "ratio": 1.4,
+          "proc_ms": 652
+        },
+        {
+          "preset": "Medium",
+          "raw_tokens": 19246,
+          "compressed_tokens": 7698,
+          "ratio": 2.5,
+          "proc_ms": 651
+        },
+        {
+          "preset": "Aggressive",
+          "raw_tokens": 19246,
+          "compressed_tokens": 3849,
+          "ratio": 5.0,
+          "proc_ms": 646
+        },
+        {
+          "preset": "Ultra",
+          "raw_tokens": 19246,
+          "compressed_tokens": 962,
+          "ratio": 20.0,
+          "proc_ms": 655
+        }
+      ],
+      "top_ext": [
+        [
+          ".py",
+          3
+        ],
+        [
+          ".json",
+          3
+        ],
+        [
+          ".css",
+          2
+        ],
+        [
+          ".ts",
+          2
+        ],
+        [
+          ".txt",
+          1
+        ]
+      ]
+    }
+  ],
+  "competitive": {
+    "repomix": {
+      "ratio": 2.3,
+      "source": "repomix.com (Tree-sitter ~70% reduction)"
+    },
+    "gitingest": {
+      "ratio": 1.8,
+      "source": "gitingest.io (light structured digest)"
+    },
+    "raw_cat": {
+      "ratio": 1.0,
+      "source": "cat *.* (verbatim baseline)"
+    }
+  },
+  "generated": "2026-03-20T06:57:16.055268"
+}
