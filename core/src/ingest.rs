@@ -17,7 +17,7 @@ pub fn walk_directory(path: &str) -> anyhow::Result<Vec<ScoredFile>> {
             let mime = from_path(path).first_or_octet_stream();
             if mime.type_() == "text" || mime.subtype() == "xml" || mime.subtype() == "json" {
                 if let Ok(content) = std::fs::read_to_string(path) {
-                    let role = classify_role(path);
+                    let role = classify_role(path, &content);
                     let cps = calculate_cps(&role, path, &content);
                     
                     entries.push(ScoredFile {

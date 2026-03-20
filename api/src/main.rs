@@ -50,6 +50,7 @@ async fn generate_context(Json(payload): Json<GenerateRequest>) -> Json<Generate
     let include_tests = payload.options.and_then(|o| o.include_tests).unwrap_or(false);
 
     let config = Config {
+        source: Some(payload.source.clone()),
         target_tokens: payload.max_tokens.or(Some(50_000)),
         preset: Some(preset_val),
         output_path: None,

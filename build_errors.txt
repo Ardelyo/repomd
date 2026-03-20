@@ -1,0 +1,18 @@
+warning: unused import: `Path`
+ --> core\src\discover.rs:1:17
+  |
+1 | ...h::{Path, Pat...
+  |        ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `repomd-core` (lib) generated 1 warning (run `cargo fix --lib -p repomd-core` to apply 1 suggestion)
+   Compiling repomd v1.6.2 (C:\Users\X1 CARBON\Downloads\repomd\cli)
+   Compiling repomd-api v0.1.0 (C:\Users\X1 CARBON\Downloads\repomd\api)
+error[E0063]: missing field `source` in initializer of `repomd_core::Config`
+  --> api\src\main.rs:52:18
+   |
+52 |     let config = Config {
+   |                  ^^^^^^ missing `source`
+
+^C

@@ -396,11 +396,16 @@ fn run_inspect(args: InspectArgs) -> anyhow::Result<()> {
 
     for (i, file) in files.iter().enumerate().take(40) {
         let role_color = match file.role {
-            repomd_core::discover::FileRole::Source => Color::Green,
-            repomd_core::discover::FileRole::Config => Color::Yellow,
-            repomd_core::discover::FileRole::Test => Color::Magenta,
-            repomd_core::discover::FileRole::Doc => Color::Blue,
-            _ => Color::DarkGrey,
+            repomd_core::discover::FileRole::EntryPoint => Color::Cyan,
+            repomd_core::discover::FileRole::CoreLogic => Color::Green,
+            repomd_core::discover::FileRole::Interface => Color::Blue,
+            repomd_core::discover::FileRole::Schema => Color::Yellow,
+            repomd_core::discover::FileRole::Config => Color::Magenta,
+            repomd_core::discover::FileRole::Documentation => Color::White,
+            repomd_core::discover::FileRole::Test => Color::DarkGrey,
+            repomd_core::discover::FileRole::DataFile => Color::DarkBlue,
+            repomd_core::discover::FileRole::StyleSheet => Color::DarkCyan,
+            repomd_core::discover::FileRole::Generated => Color::Black,
         };
 
         table.add_row(vec![
